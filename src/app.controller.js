@@ -16,8 +16,8 @@ export const bootstrap =()=>{
           DB_URL: process.env.DB_URL ? "SET" : "UNDEFINED",
         });
       });
-      
-    databaseConnection()
+
+    // databaseConnection()
     app.use("/auth",authRouter)
     app.use("/user",userRouter)
     app.use("/message",messageRouter)
