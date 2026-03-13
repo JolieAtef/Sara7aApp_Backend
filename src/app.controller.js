@@ -11,6 +11,12 @@ export const bootstrap =()=>{
     dotenv.config();
     const app = express()
     app.use(express.json())
+    app.get("/debug-env", (req, res) => {
+        res.json({
+          DB_URL: process.env.DB_URL ? "SET" : "UNDEFINED",
+        });
+      });
+      
     databaseConnection()
     app.use("/auth",authRouter)
     app.use("/user",userRouter)
@@ -20,11 +26,6 @@ export const bootstrap =()=>{
     app.use("/uploads", express.static("uploads"))
 
 
-    app.get("/debug-env", (req, res) => {
-        res.json({
-          DB_URL: process.env.DB_URL ? "SET" : "UNDEFINED",
-        });
-      });
 
 
     app.listen(3000,()=>{
