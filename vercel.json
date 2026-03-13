@@ -11,8 +11,5 @@
         "src": "/(.*)",
         "dest": "src/main.js"
       }
-    ],
-    "env": {
-       "DB_URL": "@DB_URL"
-     }
+    ]
 }
