@@ -5,12 +5,12 @@ import userRouter from "./modules/user/user.controller.js"
 import messageRouter from "./modules/message/message.controller.js"
 
 
-export const bootstrap =()=>{
+export const bootstrap = async ()=>{
     
     const app = express()
     app.use(express.json())
 
-    databaseConnection()
+    await databaseConnection()
     app.use("/auth",authRouter)
     app.use("/user",userRouter)
     app.use("/message",messageRouter)
