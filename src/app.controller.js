@@ -5,7 +5,6 @@ import userRouter from "./modules/user/user.controller.js"
 import messageRouter from "./modules/message/message.controller.js"
 
 
-
 export const bootstrap =()=>{
     
     const app = express()

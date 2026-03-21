@@ -1,12 +1,8 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const db_url = process.env.DB_URL;
+import { env } from "../../config/env.service.js";
 
 export const databaseConnection =()=>{
-    mongoose.connect(db_url).then(()=>{
+    mongoose.connect(env.DB_URL).then(()=>{
         console.log("database connected")
     }).catch((err)=>{
         console.log(err)
