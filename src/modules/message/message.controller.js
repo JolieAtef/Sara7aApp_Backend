@@ -7,7 +7,7 @@ import { upload } from "../../common/middleware/multer.js"
 
 let router = express.Router()
 
-router.post("/send_message",validation(addMessageSchema),upload().array("images",5),sendMessage)
+router.post("/send_message",validation(addMessageSchema),upload.array("images",5),sendMessage)
 
 router.get("/get_user_messages",auth,getUserMessages)
 

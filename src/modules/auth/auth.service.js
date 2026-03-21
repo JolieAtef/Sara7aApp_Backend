@@ -4,7 +4,9 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { generateToken } from "../../common/middleware/auth.js";
 import { sendEmail } from "../../common/email/sendEmail.js";
+import { imagekit } from "../../common/middleware/multer.js";
 import { env } from "../../../config/env.service.js";
+
 
 export const signUp = async (req ,res)=>{
     let { name , email , password , sharedProfileName , confirmPassword} = req.body
@@ -22,7 +24,15 @@ export const signUp = async (req ,res)=>{
     let image
     console.log(req.file)
     if(req.file){
-        image = `http://localhost:3000/uploads/${req.file.filename}`
+        // image = `http://localhost:3000/uploads/${req.file.filename}` //for diskStorage
+
+        image = await imagekit.upload({
+            file: req.file.buffer,          
+            fileName: req.file.originalname,
+            folder: "sara7a_users",              
+          });
+          
+        image= image.url
     }
     let hashPassword = await bcrypt.hash(password,10)
     // let otp = Math.floor(100000+Math.random()*900000)

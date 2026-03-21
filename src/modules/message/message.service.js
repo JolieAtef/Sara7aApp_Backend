@@ -1,3 +1,4 @@
+import { imagekit } from "../../common/middleware/multer.js";
 import { messageModel } from "../../database/models/message.model.js";
 import { userModel } from "../../database/models/user.model.js";
 
@@ -8,10 +9,21 @@ export const sendMessage = async(req , res)=>{
      if(!user){
         return res.json({message:"user not found"})
      }
-     let images
+     let images =[]
      if(req.files){
-        images = req.files.map((file)=>`http://localhost:3000/uploads/${file.filename}`)
+        // images = req.files.map((file)=>`http://localhost:3000/uploads/${file.filename}`)  // for diskStorage
+      images = await Promise.all(
+        req.files.map(async(file)=>{
+            const image = await imagekit.upload({
+                file: file.buffer,          
+                fileName:file.originalname,
+                folder: "sara7a_messages",  
+            })
+           return image.url
+         })
+       )
      }
+     
      let addedMessage = await messageModel.insertMany({receiverId ,content , image:images})
      if(addedMessage){
         res.json({message:"message added" , addedMessage})

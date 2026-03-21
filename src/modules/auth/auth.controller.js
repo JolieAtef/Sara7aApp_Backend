@@ -8,7 +8,7 @@ import { upload } from "../../common/middleware/multer.js"
 
 let router = express.Router()
 
-router.post("/signup",validation(signUpSchema), upload().single("image"),signUp)
+router.post("/signup",validation(signUpSchema), upload.single("image"),signUp)
 
 router.post("/login",validation(loginSchema),login)
 
