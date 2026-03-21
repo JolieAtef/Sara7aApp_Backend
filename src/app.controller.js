@@ -9,11 +9,11 @@ import messageRouter from "./modules/message/message.controller.js"
 export const bootstrap = async ()=>{
     
     const app = express()
-    app.use(cors({
-        origin: "http://localhost:5173", //base url frontend
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        credentials: true
-      }));
+    // app.use(cors({
+    //     origin: "http://localhost:5173", //base url frontend
+    //     methods: ["GET", "POST", "PUT", "DELETE"],
+    //     credentials: true
+    //   }));
     app.use(express.json())
 
     await databaseConnection()
