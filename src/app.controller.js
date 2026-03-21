@@ -1,4 +1,5 @@
 import express from "express"
+import cors from "cors"
 import { databaseConnection } from "./database/connection.js"
 import authRouter from "./modules/auth/auth.controller.js"
 import userRouter from "./modules/user/user.controller.js"
@@ -8,6 +9,11 @@ import messageRouter from "./modules/message/message.controller.js"
 export const bootstrap = async ()=>{
     
     const app = express()
+    app.use(cors({
+        origin: "http://localhost:5173", //base url frontend
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true
+      }));
     app.use(express.json())
 
     await databaseConnection()
@@ -18,7 +24,7 @@ export const bootstrap = async ()=>{
     app.use(express.urlencoded({extended:true}))
     app.use("/uploads", express.static("uploads"))
 
-
+    
     app.listen(3000,()=>{
         console.log("server running on port 3000")
     })
