@@ -33,7 +33,7 @@ export const upload = multer({ storage });
 //imageKit storage
 
 export const imagekit = new ImageKit({
-  publicKey:env.privateKey,
+  publicKey:env.publicKey,
   privateKey:env.privateKey,
   urlEndpoint:env.urlEndpoint,
 });

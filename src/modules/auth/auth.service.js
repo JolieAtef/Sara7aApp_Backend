@@ -6,6 +6,7 @@ import { generateToken } from "../../common/middleware/auth.js";
 import { sendEmail } from "../../common/email/sendEmail.js";
 import { imagekit } from "../../common/middleware/multer.js";
 import { env } from "../../../config/env.service.js";
+// import client from "../../database/redis.connection.js";
 
 
 export const signUp = async (req ,res)=>{
@@ -22,7 +23,7 @@ export const signUp = async (req ,res)=>{
         return res.json({message:"password doesn`t match"})
     }
     let image
-    console.log(req.file)
+    
     if(req.file){
         // image = `http://localhost:3000/uploads/${req.file.filename}` //for diskStorage
 
@@ -117,6 +118,7 @@ export const forgetPassword = async (req , res)=>{
     }
 
     let otp = Math.floor(100000+Math.random()*900000)
+    // await client.set(`${existedUser._id}:otp`,`${otp}`, `EX 30`)
     existedUser.otp= otp
     await existedUser.save()
     sendEmail(email,"forget password",`your otp code to reset password is ${otp}`)
@@ -130,6 +132,8 @@ export const resetPassword= async(req , res)=>{
     if(!existedUser){
         return res.json({messsage:"user not found"})
     }
+    // let _otp = await client.get(`${existedUser._id}:otp`)
+    
     if(existedUser.otp != otp){
         return res.json({message:"otp doesn't match"})
     }
@@ -154,7 +158,7 @@ export const resetPassword= async(req , res)=>{
 
 export const generateNewAccessToken = async (req ,res)=>{
        let{authorization} = req.headers //refresh token
-       let [ bearer , token]= authorization.split(" ")
+       let [bearer , token]= authorization.split(" ")
        let signature =""
        switch(bearer){
            case "User":
